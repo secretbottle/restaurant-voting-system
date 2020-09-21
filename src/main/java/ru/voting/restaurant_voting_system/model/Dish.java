@@ -9,11 +9,11 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "name", "price", "date_time"},
-        name = "dishes_unique_restaurant_dish_price_datetime_idx")})
+@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "name", "date"},
+        name = "dishes_unique_restaurant_name_datetime_idx")})
 public class Dish extends AbstractNamedEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,20 +28,19 @@ public class Dish extends AbstractNamedEntity {
     @Positive
     private BigDecimal price;
 
-    @Column(name = "date_time", nullable = false)
+    @Column(name = "date", nullable = false)
     @NotNull
     @DateTimeFormat
-    private LocalDateTime dateTime = LocalDateTime.now();
+    private LocalDate date = LocalDate.now();
 
     public Dish() {
     }
 
-    public Dish(Integer id, String name, BigDecimal price, LocalDateTime dateTime) {
+    public Dish(Integer id, String name, BigDecimal price, LocalDate dateTime) {
         super(id, name);
         this.price = price;
-        this.dateTime = dateTime;
+        this.date = dateTime;
     }
-
 
     public BigDecimal getPrice() {
         return price;
@@ -59,11 +58,11 @@ public class Dish extends AbstractNamedEntity {
         this.restaurant = restaurant;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDateTime() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDateTime(LocalDate date) {
+        this.date = date;
     }
 }

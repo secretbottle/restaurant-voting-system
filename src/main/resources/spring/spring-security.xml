@@ -16,12 +16,6 @@
         <csrf disabled="true"/>
     </http>
 
-    <http>
-        <intercept-url pattern="/" access="permitAll()"/>
-        <form-login />
-        <logout />
-    </http>
-
     <authentication-manager>
         <authentication-provider user-service-ref="userService">
             <password-encoder ref="passwordEncoder"/>

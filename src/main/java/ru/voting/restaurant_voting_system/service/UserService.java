@@ -4,6 +4,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,7 +47,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User get(int id) {
-        return checkNotFoundWithId(repository.get(id), id);
+        return checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 
     public User getByEmail(String email) {
@@ -56,7 +57,8 @@ public class UserService implements UserDetailsService {
 
     @Cacheable("users")
     public List<User> getAll() {
-        return repository.getAll();
+        Sort sortByNameAndEmail = Sort.by(Sort.Direction.ASC, "name", "email");
+        return repository.findAll(sortByNameAndEmail);
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -69,7 +71,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void update(UserTo userTo) {
         User user = get(userTo.id());
-        prepareAndSave(UserUtil.updateFromTo(user, userTo));   // !! need only for JDBC implementation
+        prepareAndSave(UserUtil.updateFromTo(user, userTo));
     }
 
     @Override

@@ -23,7 +23,7 @@ public class RestaurantTestData {
     }
 
     public static Restaurant getUpdated() {
-        return null;
+        return new Restaurant(RESTAURANT_ID + 1, "Updated restaurant name");
     }
 
 }

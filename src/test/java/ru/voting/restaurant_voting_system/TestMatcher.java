@@ -1,8 +1,12 @@
 package ru.voting.restaurant_voting_system;
 
+import org.springframework.test.web.servlet.ResultMatcher;
+
+import java.util.List;
 import java.util.function.BiConsumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static ru.voting.restaurant_voting_system.TestUtil.readListFromJsonMvcResult;
 
 public class TestMatcher<T> {
     private final Class<T> clazz;
@@ -37,6 +41,19 @@ public class TestMatcher<T> {
         return usingAssertions(clazz,
                 (a, e) -> assertThat(a).isEqualToIgnoringGivenFields(e, fieldsToIgnore),
                 (a, e) -> assertThat(a).usingElementComparatorIgnoringFields(fieldsToIgnore).isEqualTo(e));
+    }
+
+    public ResultMatcher contentJson(T expected) {
+        return result -> assertMatch(TestUtil.readFromJsonMvcResult(result, clazz), expected);
+    }
+
+    @SafeVarargs
+    public final ResultMatcher contentJson(T... expected) {
+        return contentJson(List.of(expected));
+    }
+
+    public ResultMatcher contentJson(Iterable<T> expected) {
+        return result -> assertMatch(readListFromJsonMvcResult(result, clazz), expected);
     }
 
 }

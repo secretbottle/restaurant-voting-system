@@ -2,15 +2,14 @@ package ru.voting.restaurant_voting_system.model;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "restaurant_id", "date_time"},
-        name = "votes_unique_user_restaurant_datetime_idx")})
+@Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "restaurant_id"},
+        name = "vote_unique_user_date_idx")})
 public class Vote extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -23,27 +22,26 @@ public class Vote extends AbstractBaseEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
 
-    @Column(name = "date_time", nullable = false)
+    @Column(name = "date", nullable = false)
     @NotNull
-    @DateTimeFormat
-    private LocalDateTime dateTime = LocalDateTime.now();
+    private LocalDate date = LocalDate.now();
 
     public Vote() {
     }
 
-    public Vote(Restaurant restaurant, LocalDateTime dateTime) {
-        this(null, restaurant, dateTime);
+    public Vote(Restaurant restaurant, LocalDate date) {
+        this(null, restaurant, date);
     }
 
-    public Vote(User user, Restaurant restaurant, LocalDateTime dateTime) {
-        this(null, user, restaurant, dateTime);
+    public Vote(User user, Restaurant restaurant, LocalDate date) {
+        this(null, user, restaurant, date);
     }
 
-    public Vote(Integer id, User user, Restaurant restaurant, LocalDateTime dateTime) {
+    public Vote(Integer id, User user, Restaurant restaurant, LocalDate date) {
         super(id);
         this.user = user;
         this.restaurant = restaurant;
-        this.dateTime = dateTime;
+        this.date = date;
     }
 
     public User getUser() {
@@ -62,11 +60,11 @@ public class Vote extends AbstractBaseEntity {
         this.restaurant = restaurant;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(@NotNull LocalDate dateTime) {
+        this.date = dateTime;
     }
 }
