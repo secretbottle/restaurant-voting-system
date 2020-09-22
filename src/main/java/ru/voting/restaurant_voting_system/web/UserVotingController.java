@@ -17,6 +17,7 @@ import ru.voting.restaurant_voting_system.repository.RestaurantRepository;
 import ru.voting.restaurant_voting_system.repository.UserRepository;
 import ru.voting.restaurant_voting_system.repository.VoteRepository;
 import ru.voting.restaurant_voting_system.to.BaseTo;
+import ru.voting.restaurant_voting_system.util.VoteUtil;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -29,6 +30,7 @@ import static ru.voting.restaurant_voting_system.util.ValidationUtil.checkVoteOn
 public class UserVotingController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     static final String REST_URL = "/rest/profile/votes";
+
 
     private final DishRepository dishRepository;
     private final RestaurantRepository restaurantRepository;
@@ -55,7 +57,7 @@ public class UserVotingController {
             vote = new Vote(restaurant, date);
             vote.setUser(userRepository.getOne(userId));
         } else {
-            checkVoteOnTime(LocalTime.now());
+            checkVoteOnTime(LocalTime.now(VoteUtil.getClock()));
             vote.setDate(date);
             vote.setRestaurant(restaurant);
         }
@@ -76,4 +78,5 @@ public class UserVotingController {
         log.info("getAll restaurants");
         return restaurantRepository.findAll();
     }
+
 }
