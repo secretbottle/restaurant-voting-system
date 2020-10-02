@@ -3,7 +3,6 @@ package ru.voting.restaurant_voting_system.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import ru.voting.restaurant_voting_system.model.Restaurant;
 import ru.voting.restaurant_voting_system.repository.RestaurantRepository;
 
 import java.net.URI;
-import java.util.List;
 
 import static ru.voting.restaurant_voting_system.util.ValidationUtil.*;
 
@@ -74,11 +72,6 @@ public class AdminRestaurantController {
         checkNotFoundWithId(repository.delete(id) != 0, id);
     }
 
-    @Cacheable("restaurant")
-    @GetMapping
-    public List<Restaurant> getAll() {
-        log.info("getAll restaurants");
-        return repository.findAll();
-    }
+
 
 }

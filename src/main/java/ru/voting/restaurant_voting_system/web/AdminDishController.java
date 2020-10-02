@@ -39,7 +39,7 @@ public class AdminDishController {
     public ResponseEntity<Dish> create(@RequestBody Dish dish) {
         Assert.notNull(dish, "dish must not be null");
         checkNew(dish);
-        log.info("create dish {} for restaurant {}", dish, dish.getRestaurant());
+        log.info("create dish {} for restaurant {}", dish, dish.getRestaurantId());
         Dish created = repository.save(dish);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -64,7 +64,7 @@ public class AdminDishController {
     @ResponseBody
     public Dish get(@PathVariable int id) {
         log.info("get restaurant with id {} ", id);
-        return checkNotFoundWithId(repository.getDishById(id), id);
+        return checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 
     @Transactional

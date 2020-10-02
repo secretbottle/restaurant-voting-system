@@ -11,10 +11,11 @@ import static ru.voting.restaurant_voting_system.RestaurantTestData.RESTAURANT_2
 import static ru.voting.restaurant_voting_system.model.AbstractBaseEntity.START_SEQ;
 
 public class DishTestData {
-    public static TestMatcher<Dish> DISH_MATCHER = TestMatcher.usingFieldsWithIgnoringAssertions(Dish.class, "restaurant");
+    public static TestMatcher<Dish> DISH_MATCHER = TestMatcher.usingFieldsWithIgnoringAssertions(Dish.class, "restaurantId");
 
     public static final int NOT_FOUND = 10;
     public static final int DISH_ID = START_SEQ + 5;
+    public static final int RESTAURANT_2_ID = RESTAURANT_2.getId();
 
     public static final Dish DISH_1 = new Dish(DISH_ID + 1, "Chefburger", getBigDecimal(19900), of(2020, Month.JANUARY, 30));
     public static final Dish DISH_2 = new Dish(DISH_ID + 2, "Longer", getBigDecimal(9900), of(2020, Month.JANUARY, 30));
@@ -36,7 +37,7 @@ public class DishTestData {
 
     public static Dish getUpdated() {
         Dish updated =  new Dish(DISH_ID + 1, "New Dish", getBigDecimal(999), of(2020, Month.AUGUST, 1));
-        updated.setRestaurant(RESTAURANT_2);
+        updated.setRestaurantId(RESTAURANT_2_ID);
         return updated;
     }
 

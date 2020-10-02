@@ -92,4 +92,5 @@ class AdminDishControllerTest extends AbstractTestController {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(DISH_MATCHER.contentJson(LIST_ALL_RESTAURANT_1_DISHES));
     }
+
 }

@@ -85,13 +85,4 @@ class AdminRestaurantControllerTest extends AbstractTestController {
                 .andExpect(status().isUnprocessableEntity());
     }
 
-    @Test
-    void getAll() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL)
-                .with(userHttpBasic(ADMIN_USER)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER.contentJson(LIST_ALL_RESTAURANT));
-    }
 }

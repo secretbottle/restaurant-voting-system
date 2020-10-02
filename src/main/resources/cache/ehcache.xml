@@ -12,14 +12,6 @@
         <heap>1000</heap>
     </cache-template>
 
-    <cache-template name="singleNonExpiryCache">
-        <expiry>
-            <none/>
-        </expiry>
-        <heap>1</heap>
-    </cache-template>
-
-    <cache alias="users" uses-template="singleNonExpiryCache"/>
     <cache alias="restaurant" uses-template="expiryCache"/>
     <cache alias="dish" uses-template="expiryCache"/>
 </config>

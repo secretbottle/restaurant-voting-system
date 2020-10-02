@@ -21,42 +21,45 @@ USER action list:
 
 ### curl samples (application deployed at application context `voting`)
 ##### get all Restaurants
-curl -s http://localhost:8080/voting/rest/admin/restaurants --user admin@email.com:password
+curl -s http://localhost:8080/voting/rest/restaurants --user admin@email.com:password
 
 ##### get all Dishes for Restaurant
 curl -s http://localhost:8080/voting/rest/admin/dishes?id=100004 --user admin@email.com:password
 
 #### ADMIN actions:
-##### get restaurant
+##### get a restaurant
 curl -s http://localhost:8080/voting/rest/admin/restaurants/100003 --user admin@email.com:password
 
-##### create restaurant
+##### create a restaurant
 curl -s -X POST -d '{"name":"New Restaurant"}' http://localhost:8080/voting/rest/admin/restaurants -H "Content-Type: application/json" --user admin@email.com:password
 
-##### update restaurant
+##### update a restaurant
 curl -s -X PUT -d '{"id":100016,"name":"New Restaurant"}' http://localhost:8080/voting/rest/admin/restaurants/100016 -H "Content-Type: application/json"  --user admin@email.com:password
 
-##### delete restaurant
+##### delete a restaurant
 curl -s -X DELETE http://localhost:8080/voting/rest/admin/restaurants/100003 --user admin@email.com:password
 
-##### get dish
+##### get a dish
 curl -s http://localhost:8080/voting/rest/admin/dishes/100010 --user admin@email.com:password
 
-##### create dish
-curl -s -X POST -d '{"restaurant":{"id":100004,"name":"Random Sushi"}, "name":"New Dish", "price":199.00}' http://localhost:8080/voting/rest/admin/dishes -H "Content-Type: application/json" --user admin@email.com:password
+##### create a dish
+curl -s -X POST -d '{"restaurantId":100004, "name":"New Dish", "price":199.00}' http://localhost:8080/voting/rest/admin/dishes -H "Content-Type: application/json" --user admin@email.com:password
 
-#### update dish
-curl -s -X PUT -d '{"id":100016,"name":"Updated Dish","restaurant":{"id":100004,"name":"Random Sushi"},"price":199.00,"date":"2020-09-19"}' http://localhost:8080/voting/rest/admin/dishes/100016 -H "Content-Type: application/json"  --user admin@email.com:password
+#### update a dish
+curl -s -X PUT -d '{"id":100016,"name":"Updated Dish","restaurantId":100004,"price":199.00,"date":"2020-09-19"}' http://localhost:8080/voting/rest/admin/dishes/100016 -H "Content-Type: application/json"  --user admin@email.com:password
 
-##### delete dish
+##### delete a dish
 curl -s -X DELETE http://localhost:8080/voting/rest/admin/dishes/100010 --user admin@email.com:password
 
 #### USER actions:
 ##### get all restaurants
-curl -s http://localhost:8080/voting/rest/profile/votes/restaurants --user user1@email.com:password
+curl -s http://localhost:8080/voting/rest/restaurants --user user1@email.com:password
 
-##### get restaurant menu
+##### get a restaurant menu by today
 curl -s http://localhost:8080/voting/rest/profile/votes/restaurants/100005/dishes --user user1@email.com:password
 
-##### vote for restaurant
-curl -s -X PUT -d '{"id":100003}' -H "Content-Type: application/json" http://localhost:8080/voting/rest/profile/votes --user user1@email.com:password
+##### create a vote for restaurant
+curl -s -X POST -d '{"restaurantId":100003}' http://localhost:8080/voting/rest/profile/votes --user user1@email.com:password -H "Content-Type: application/json" 
+
+##### update a vote for restaurant
+curl -s -X PUT -d '{"restaurantId":100002}' http://localhost:8080/voting/rest/profile/votes/100016 --user user1@email.com:password -H "Content-Type: application/json" 

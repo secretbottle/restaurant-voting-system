@@ -1,10 +1,11 @@
 package ru.voting.restaurant_voting_system.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -16,11 +17,9 @@ import java.time.LocalDate;
         name = "dishes_unique_restaurant_name_datetime_idx")})
 public class Dish extends AbstractNamedEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id", nullable = false)
+    @Column(name = "restaurant_id")
     @NotNull
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Restaurant restaurant;
+    private int restaurantId;
 
     @Column(name = "price", nullable = false)
     @NotNull
@@ -50,12 +49,12 @@ public class Dish extends AbstractNamedEntity {
         this.price = price;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public int getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setRestaurantId(int restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     public LocalDate getDateTime() {

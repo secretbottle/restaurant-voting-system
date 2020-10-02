@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.voting.restaurant_voting_system.model.Dish;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -19,9 +20,10 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
     @Query("DELETE FROM Dish d WHERE d.id=:id")
     int delete(@Param("id") int id);
 
-    @Query("SELECT d FROM Dish d JOIN FETCH d.restaurant WHERE d.restaurant.id=:restaurant_id ORDER BY d.name")
+    @Query("SELECT d FROM Dish d WHERE d.restaurantId=:restaurant_id ORDER BY d.name")
     List<Dish> findAllByRestaurantId(@Param("restaurant_id") int restaurant_id);
 
-    @Query("SELECT d FROM Dish d JOIN FETCH d.restaurant WHERE d.id=:dish_id")
-    Dish getDishById(@Param("dish_id") int dish_id);
+    @Query("SELECT d FROM Dish d WHERE d.restaurantId=:restaurant_id AND d.date=:date ORDER BY d.name")
+    List<Dish> findAllByRestaurantIdToday(@Param("restaurant_id") int restaurant_id, @Param("date") LocalDate date);
+
 }

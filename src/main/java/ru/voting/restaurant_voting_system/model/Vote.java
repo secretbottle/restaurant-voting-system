@@ -17,10 +17,9 @@ public class Vote extends AbstractBaseEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Restaurant restaurant;
+    @Column(name = "restaurant_id")
+    @NotNull
+    private int restaurantId;
 
     @Column(name = "date", nullable = false)
     @NotNull
@@ -29,18 +28,18 @@ public class Vote extends AbstractBaseEntity {
     public Vote() {
     }
 
-    public Vote(Restaurant restaurant, LocalDate date) {
-        this(null, restaurant, date);
+    public Vote(int restaurantId, LocalDate date) {
+        this(null, restaurantId, date);
     }
 
-    public Vote(User user, Restaurant restaurant, LocalDate date) {
-        this(null, user, restaurant, date);
+    public Vote(User user, int restaurantId, LocalDate date) {
+        this(null, user, restaurantId, date);
     }
 
-    public Vote(Integer id, User user, Restaurant restaurant, LocalDate date) {
+    public Vote(Integer id, User user, int restaurantId, LocalDate date) {
         super(id);
         this.user = user;
-        this.restaurant = restaurant;
+        this.restaurantId = restaurantId;
         this.date = date;
     }
 
@@ -52,19 +51,19 @@ public class Vote extends AbstractBaseEntity {
         this.user = user;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public int getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setRestaurantId(int restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(@NotNull LocalDate dateTime) {
-        this.date = dateTime;
+    public void setDate(@NotNull LocalDate date) {
+        this.date = date;
     }
 }
